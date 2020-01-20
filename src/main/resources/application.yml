@@ -1,6 +1,7 @@
-server:
+﻿server:
   port: 8082
 
-logging:
-  file:
-    path: E:\tmpLogs\
+#暂时不需输出到文件
+#logging:
+#  file:
+#    path: E:\tmpLogs\
