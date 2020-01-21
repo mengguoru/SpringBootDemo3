@@ -1,6 +1,7 @@
 package com.meng.demo.utils;
 
 import com.meng.demo.pojo.User;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,15 @@ public class JWTUtil {
         long expr = now + 3*24*60*60*1000;//三天后过期
         JwtBuilder builder = Jwts.builder().setId(user.getId() + "")
                 .setSubject(user.getUsername())
+                .claim("authority", user.getAuthority())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(expr))
                 .signWith(SecretKey);
         String token = builder.compact();
         return token;
+    }
+
+    public Claims parseJWT(String token){
+        return Jwts.parser().setSigningKey(SecretKey).parseClaimsJws(token).getBody();
     }
 }

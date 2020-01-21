@@ -12,18 +12,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/user")
 public class UserController{
 
     @Autowired
     private JWTUtil jwtUtil;
     @Autowired
     private UserService userService;
+    @Autowired
+    private HttpServletRequest request;
 
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -38,6 +42,26 @@ public class UserController{
             return new ResponseEntity<>(map, HttpStatus.OK);
         }else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
+    @PutMapping()
+    public HttpEntity<?> update(@RequestBody User user){
+        //判断权限
+        String token = (String)request.getAttribute("admin_token");
+        if(null == token || "".equals(token)){
+            Map map = new HashMap();
+            map.put("msg", "权限不足");
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+        }
+
+
+        System.out.println("成功更新" + user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping
+    public HttpEntity<?> search(){
+        System.out.println("查询成功");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
