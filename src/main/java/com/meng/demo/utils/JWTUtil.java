@@ -35,7 +35,8 @@ public class JWTUtil {
     public String generateToken(User user){
         //当前时间
         long now = System.currentTimeMillis();
-        long expr = now + 3*24*60*60*1000;//三天后过期
+//        long expr = now + 3*24*60*60*1000;//三天后过期
+        long expr = now + 3*60*1000;//为测试
         JwtBuilder builder = Jwts.builder().setId(user.getId() + "")
                 .setSubject(user.getUsername())
                 .claim("authority", user.getAuthority())

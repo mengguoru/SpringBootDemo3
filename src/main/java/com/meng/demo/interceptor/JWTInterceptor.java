@@ -11,6 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 
 @Component
 public class JWTInterceptor implements HandlerInterceptor {
@@ -30,6 +31,9 @@ public class JWTInterceptor implements HandlerInterceptor {
 
                 if(null != auth && auth.equals("admin")){
                     System.out.println("token为：" + token);
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS");
+                    String tmp = format.format(claims.getExpiration());
+                    System.out.println("过期时间：" + tmp);
                     request.setAttribute("admin_token", token);
                 }
             }catch (Exception e){
