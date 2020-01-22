@@ -1,5 +1,6 @@
 package com.meng.demo;
 
+import com.meng.demo.service.RSAService;
 import com.meng.demo.service.UserService;
 import com.meng.demo.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,4 +24,6 @@ public class Configuration1 {
     public UserService userService(){return new UserService();}
     @Bean
     public BCryptPasswordEncoder bcrypt(){return new BCryptPasswordEncoder();}
+    @Bean
+    public RSAService rsaService(){return new RSAService();}
 }

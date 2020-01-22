@@ -14,7 +14,7 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor)
-                .addPathPatterns("/**")
+                .addPathPatterns("/user/**")
                 .excludePathPatterns("/**/login");
     }
 }

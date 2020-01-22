@@ -1,8 +1,10 @@
 package com.meng.demo.controller;
 
 import com.meng.demo.pojo.User;
+import com.meng.demo.service.RSAService;
 import com.meng.demo.service.UserService;
 import com.meng.demo.utils.JWTUtil;
+import com.meng.demo.utils.RSAUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +30,20 @@ public class UserController{
     private UserService userService;
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private RSAService rsaService;
 
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @PostMapping("/login")
-    public HttpEntity<?> login(@RequestBody User user) throws NoSuchAlgorithmException {
+    public HttpEntity<?> login(@RequestBody User user) throws Exception {
+        System.out.println("登录");
+        //测试能否解密
+        String tmp = user.getPassword();
+        System.out.println("解密前" + tmp);
+        tmp = RSAUtil.decrypt(tmp, rsaService.redisService.get(user.getUsername()));
+        System.out.println("解密后" + tmp);
+
         logger.info(user.toString());
         if(userService.login(user)){
             Map map = new HashMap();
@@ -43,6 +54,7 @@ public class UserController{
         }else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
 
     @PutMapping()
     public HttpEntity<?> update(@RequestBody User user){

@@ -5,3 +5,17 @@
 #logging:
 #  file:
 #    path: E:\tmpLogs\
+
+
+spring:
+
+  #thymeleaf start
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    #开发时关闭缓存,不然没法看到实时页面
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    servlet:
+      content-type: text/html
