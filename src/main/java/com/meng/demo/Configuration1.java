@@ -5,6 +5,7 @@ import com.meng.demo.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -20,4 +21,6 @@ public class Configuration1 {
     }
     @Bean
     public UserService userService(){return new UserService();}
+    @Bean
+    public BCryptPasswordEncoder bcrypt(){return new BCryptPasswordEncoder();}
 }
